@@ -13,7 +13,9 @@ CREATE TABLE IF NOT EXISTS usuarios
     sexo VARCHAR(30) NOT NULL,
     pais VARCHAR(30) NOT NULL,
     codigo_postal INT NOT NULL,
+    canal_id INT,
     PRIMARY KEY(id_usuario)
+    FOREIGN KEY (canal_id) REFERENCES canales(id_canal)
 );
 
 CREATE TABLE IF NOT EXISTS videos
@@ -28,24 +30,43 @@ CREATE TABLE IF NOT EXISTS videos
     reproducciones INT NOT NULL,
     likes INT NOT NULL,
     dislikes INT NOT NULL,
-    visibilidad VARCHAR(30) NOT NULL, #enum
+    visibilidad ENUM("publico","oculto","privado") NOT NULL,
+    video_etiqueta_id INT, 
+    usuario_id INT,
     fecha DATE NOT NULL,
     hora TIME NOT NULL,
-    usuario_id INT,
     PRIMARY KEY(id_video),
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id_usuario)
 );
-
-#tabla likes
-#tabla dislikes
 
 CREATE TABLE IF NOT EXISTS etiquetas
 (
     id_etiqueta INT NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(30),
-    video_id INT,
+    video_etiqueta_id INT,
     PRIMARY KEY(id_etiqueta),
-    FOREIGN KEY (video_id) REFERENCES videos(video_id) #video puede tener muchas etiquetas
+);
+
+CREATE TABLE IF NOT EXISTS videos_etiquetas ( 
+    id_video_etiqueta INT NOT NULL AUTO_INCREMENT,
+    video_id INT NOT NULL,
+    etiqueta_id INT NOT NULL, 
+    PRIMARY KEY(id_video_etiqueta),
+    FOREIGN KEY (video_id) REFERENCES videos(id_video),
+    FOREIGN KEY (etiqueta_id) REFERENCES etiquetas(id_etiqueta)
+);
+
+CREATE TABLE IF NOT EXISTS likes_dislikes
+(
+    id_like_dislike INT NOT NULL AUTO_INCREMENT,
+    like_dislike ENUM("like","dislike"),
+    fecha DATE NOT NULL,
+    hora TIME NOT NULL,
+    video_id INT,
+    usuario_id INT,
+    PRIMARY KEY(id_like_dislike),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id_usuario),
+    FOREIGN KEY (video_id) REFERENCES videos(id_video)
 );
 
 CREATE TABLE IF NOT EXISTS canales
@@ -54,10 +75,9 @@ CREATE TABLE IF NOT EXISTS canales
     nombre VARCHAR(30) NOT NULL,
     descripcion VARCHAR(250) NOT NULL,
     fecha DATE NOT NULL,
-    array_seguidores VARCHAR(30),
-
+    # => ¿varchar vale como array con todos los seguidores?
+    seguidores VARCHAR(30),
 );
-
 
     
 CREATE TABLE IF NOT EXISTS seguidores
