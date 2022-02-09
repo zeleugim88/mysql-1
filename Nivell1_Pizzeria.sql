@@ -43,7 +43,7 @@ CREATE TABLE clientes
 
 CREATE TABLE IF NOT EXISTS productos (
     id_producto INT NOT NULL AUTO_INCREMENT,
-    tipo VARCHAR(30) NOT NULL,
+    tipo ENUM("pizzas", "hamburguesas", "bebidas")
     nombre VARCHAR(30) NOT NULL,
     descripcion VARCHAR(200) NOT NULL,
     imagen BLOB NOT NULL,
