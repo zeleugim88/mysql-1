@@ -1,7 +1,7 @@
 # Create and select database
-DROP DATABASE IF EXISTS optica;
-CREATE DATABASE optica;
-USE optica; 
+DROP DATABASE IF EXISTS opticas;
+CREATE DATABASE opticas;
+USE opticas; 
 
 CREATE TABLE IF NOT EXISTS proveedores
 (
