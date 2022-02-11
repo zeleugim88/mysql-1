@@ -1,4 +1,3 @@
-/* 
 SELECT apellido1, apellido2, nombre FROM persona WHERE tipo ="alumno" ORDER BY apellido1, apellido2, nombre;
 SELECT nombre, apellido1, apellido2, telefono, NIF FROM persona WHERE telefono IS NULL AND NIF LIKE "%K" AND tipo = "alumno";
 SELECT * FROM persona WHERE YEAR(fecha_nacimiento) = 1999 AND tipo = "alumno";
@@ -25,4 +24,3 @@ SELECT ce.anyo_inicio as "inicio curso", COUNT(a.id_alumno) FROM curso_escolar c
 SELECT p.id, p.nombre, p.apellido1, p.apellido2, COUNT(a.id) as "num_asignaturas" FROM persona p LEFT JOIN profesor pr ON p.id = pr.id_profesor LEFT JOIN asignatura a ON pr.id_profesor = a.id_profesor WHERE p.tipo = "profesor" GROUP BY p.id ORDER BY COUNT(a.id) DESC;
 SELECT * FROM persona WHERE fecha_nacimiento IN (SELECT MAX(fecha_nacimiento) FROM persona);
 SELECT pe.apellido1, pe.apellido2, pe.nombre, d.nombre as "departamento" FROM persona pe LEFT JOIN profesor pr ON pe.id = pr.id_profesor LEFT JOIN departamento d ON pr.id_departamento = d.id LEFT JOIN asignatura a ON pr.id_profesor = a.id_profesor WHERE a.id IS NULL AND d.id IS NOT NULL;
-*/
